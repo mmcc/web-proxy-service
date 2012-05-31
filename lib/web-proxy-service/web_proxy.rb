@@ -23,7 +23,9 @@ module WebProxyService
       # req_headers['Via']            = '?' # We let the server know we're proxying... correct/useful form?
 
       # Let's get the content
-      http = EM::HttpRequest.new(url).get({ :head => req_headers })
+      connect_opts = {:proxy => {:host => '192.168.1.24', :port => 8080}}
+      request_opts = {:proxy => {:authorization => ['tsav', '']}}
+      http = EM::HttpRequest.new(url).get({ :head => req_headers }, request_opts)
       response_code = http.response_header.status
       # rescue......... whitelist..... ?
       # .. add protection.. sanitization ... etc...........
