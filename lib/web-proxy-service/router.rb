@@ -5,7 +5,7 @@ module WebProxyService
     use Goliath::Rack::Heartbeat, { :path => '/health_check', :response => [200, {}, []] }
     
     map '' do
-      run Proc.new {|env| [200, {}, ['hi']] }
+      run Proc.new {|env| [200, {}, ['<a href="/webp?url=http://www.youtube.com">Example (YouTube)</a>']] }
     end
     
     get '/favicon.ico' do

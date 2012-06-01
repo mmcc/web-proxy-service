@@ -18,14 +18,15 @@ module WebProxyService
       req_headers['Accept-Charset'] = env['HTTP_ACCEPT_LANGUAGE']
       req_headers['Cookie']         = env['HTTP_COOKIE']
       req_headers['User-Agent']     = env['HTTP_USER_AGENT']
+
       # req_headers['X-Remote-Addr']  = env['REMOTE_ADDR'] # ... ? for geo, etc.
       # req_headers['Referer']        = env['?']
       # req_headers['Via']            = '?' # We let the server know we're proxying... correct/useful form?
 
       # Let's get the content
-      connect_opts = {:proxy => {:host => '192.168.1.24', :port => 8080}}
-      request_opts = {:proxy => {:authorization => ['tsav', '']}}
-      http = EM::HttpRequest.new(url).get({ :head => req_headers }, request_opts)
+      connect_opts = {:proxy => {:host => '192.168.1.24', :port => 3128}}
+      request_opts = {:head => req_headers, :proxy => {:authorization => ['tsav', '']}}
+      http = EM::HttpRequest.new(url, connect_opts).get request_opts
       response_code = http.response_header.status
       # rescue......... whitelist..... ?
       # .. add protection.. sanitization ... etc...........
